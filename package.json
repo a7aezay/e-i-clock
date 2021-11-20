@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/a7aezay/e-i-clock/issues"
   },
-  "homepage": "https://github.com/a7aezay/e-i-clock#readme"
+  "homepage": "https://github.com/a7aezay/e-i-clock#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
