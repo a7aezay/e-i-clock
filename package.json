@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node ./node_modules/pm2/bin/pm2 start ./index.js --name e-i-clock --log ../logs/e-i-clock.log",
+    "stop": "node ./node_modules/pm2/bin/pm2 stop hello_aws",
+    "build": "echo 'Building...",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +22,7 @@
   "homepage": "https://github.com/a7aezay/e-i-clock#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "pug": "^3.0.2"
+    "pug": "^3.0.2",
+    "pm2": "^4.2.0"
   }
 }
