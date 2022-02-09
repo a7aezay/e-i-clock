@@ -2,10 +2,10 @@
   "name": "e-i-clock",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "scripts/server.js",
   "scripts": {
-    "start": "node ./node_modules/pm2/bin/pm2 start ./index.js --name e-i-clock --log ../logs/e-i-clock.log",
-    "stop": "node ./node_modules/pm2/bin/pm2 stop hello_aws",
+    "start": "node ./node_modules/pm2/bin/pm2 start ./scripts/server.js --name e-i-clock --log ../logs/server.log",
+    "stop": "node ./node_modules/pm2/bin/pm2 stop e-i-clock",
     "build": "echo 'Building...",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
