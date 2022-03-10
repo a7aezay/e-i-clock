@@ -3,7 +3,6 @@
   src: url("fonts/neo-euler.otf") format("otf");
 }
 
-
 html { 
   font-family: 'Neo Euler';
   font-weight: 200;
@@ -18,9 +17,10 @@ body {
 
 header {
   font-size: 2em;
-  justify-content: center;
+  text-align: center;
 }
 
 footer {
   justify-content: center;
+  text-align: center;
 }

@@ -1,4 +1,4 @@
-# Euler Clock
+# Euler Identity Clock
 
 ## Refrences
 [1] https://theenterpriseworld.com/elon-musk-5-minute-rule/
