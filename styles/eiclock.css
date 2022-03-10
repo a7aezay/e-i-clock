@@ -1,0 +1,26 @@
+@font-face {
+  font-family: "Neo Euler";
+  src: url("fonts/neo-euler.otf") format("otf");
+}
+
+
+html { 
+  font-family: 'Neo Euler';
+  font-weight: 200;
+}
+
+body {
+  color: black;
+  background-color: #F8F0E3;
+  margin: 10px;
+  justify-content: center;
+}
+
+header {
+  font-size: 2em;
+  justify-content: center;
+}
+
+footer {
+  justify-content: center;
+}
