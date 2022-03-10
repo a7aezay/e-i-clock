@@ -31,7 +31,7 @@ function windowResized() {
 
 function draw() {
   textFont(eulerFont);
-  drawTangentLine(windowWidth / 2, windowHeight / 2);
+  drawLogo(windowWidth / 2, windowHeight / 2);
 }
 
 
