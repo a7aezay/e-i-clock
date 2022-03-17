@@ -5,16 +5,18 @@
  * All Rights Reserved Bla Bla Bla
  * 
  * This is a clock based on 
- * Euler's Identity Equation e^i*pi = 1 Day.
+ * Euler's Identity Equation e^i*pi
  * The clock rotation is anti-clock wise (ironically)
  * 
  * The clock divide the day into 4 quarters, each 6 hours.
  */
 
-let r;
 let radius;
-let len;
 let eulerFont;
+let activeSegment;
+let activeSegmentBlinkCounter;
+let activeSegmentBlinkColor;
+let activeSegmentBlinkRate;
 
 function preload() {
   eulerFont = loadFont('../fonts/neo-euler.otf');
@@ -32,6 +34,8 @@ function setup() {
   let minScreenLength = Math.min(windowWidth, windowHeight);
   radius = minScreenLength / 2 * 0.618;
   console.log(radius);
+  activeSegmentBlinkColor = '#1D222A';
+  activeSegmentBlinkCounter = second();
 }
 
 function windowResized() {
@@ -43,14 +47,24 @@ function windowResized() {
 }
 
 function draw() {
+  printMillis();
   drawAxis(4);
   drawClock(4);
-  drawClockLabels(width/2, height/2);
-  shadeDaySegments(width/2, height/2);
-  shadeSleepSegment(width/2, height/2);
+  drawClockLabels(width / 2, height / 2);
+  shadeDaySegments(width / 2, height / 2);
+  shadeSleepSegment(width / 2, height / 2);
   // shadeActiveSegment(width/2, height/2);
+  shadePastTime(width / 2, height / 2);
 }
 
+function printMillis() {
+  removeElements();
+  let millisecond = millis();
+  let message = "Running Time: " + Math.floor(millisecond / 1000) + " seconds";
+  let p = createP(message);
+  p.style('font-size', '11px');
+  p.position(4, 4);
+}
 function drawAxis(strokeWeightValue) {
   push();
   // stroke
@@ -67,7 +81,7 @@ function drawClock(strokeWeightValue) {
   push();
   strokeWeight(strokeWeightValue);
   noFill();
-  circle(width/2, height /2, diameter);
+  circle(width / 2, height / 2, diameter);
   pop();
 }
 
@@ -76,29 +90,30 @@ function drawClockLabels(cx, cy) {
   translate(cx, cy);
   textSize(24);
   // 7am
-  text("7am", radius * cos(0) , radius * sin(0) - textDescent());
+  text("7am", radius * cos(0), radius * sin(0) - textDescent());
   // 9am
   text("9am", radius * cos(330), radius * sin(330));
   // 11am
   text("11am", radius * cos(300), radius * sin(300));
   // 1pm
-  text("1pm", radius * cos(270) , radius * sin(270) - textDescent());
+  text("1pm", radius * cos(270), radius * sin(270) - textDescent());
   // 3pm
-  text("3pm", radius * cos(240) - textWidth("3pm") , radius * sin(240));
+  text("3pm", radius * cos(240) - textWidth("3pm"), radius * sin(240));
   // 5pm
-  text("5pm", radius * cos(210) - textWidth("5pm") , radius * sin(210));
+  text("5pm", radius * cos(210) - textWidth("5pm"), radius * sin(210));
   // 7pm
-  text("7pm", radius * cos(180) - textWidth("7pm") , radius * sin(180) - textDescent());
+  text("7pm", radius * cos(180) - textWidth("7pm"), radius * sin(180) - textDescent());
   // 9pm
-  text("9pm", radius * cos(150) - textWidth("9pm") , radius * sin(150) + textAscent());
+  text("9pm", radius * cos(150) - textWidth("9pm"), radius * sin(150) + textAscent());
   // 11pm
-  text("11pm", radius * cos(120) - textWidth("11pm") , radius * sin(120) + textAscent());
+  text("11pm", radius * cos(120) - textWidth("11pm"), radius * sin(120) + textAscent());
   // 1am
-  text("1am", radius * cos(90) , radius * sin(90) + textAscent() + textDescent());
+  text("1am", radius * cos(90), radius * sin(90) + textAscent() + textDescent());
   pop();
 }
 
 function shadeDaySegments(cx, cy) {
+  console.log(activeSegment);
   push();
   ellipseMode(RADIUS);
   strokeWeight(4);
@@ -141,6 +156,79 @@ function shadeSleepSegment(cx, cy) {
   pop();
 }
 
-function shadeActiveSegment(cx, cy) {
-  // TODO
+
+
+function between(x, min, max) {
+  return x >= min && x <= max;
+}
+
+function blinkSegment(segmentColor) {
+  console.log(activeSegmentBlinkCounter);
+  let currentSecond = second();
+  if (activeSegmentBlinkCounter != currentSecond) {
+    toggleColor(segmentColor);
+    activeSegmentBlinkCounter = currentSecond;
+  }
+}
+
+function toggleColor(segmentColor) {
+  if (activeSegmentBlinkColor === segmentColor) {
+    fill('#1D222A');
+    activeSegmentBlinkColor = '#1D222A';
+  } else {
+    fill(segmentColor);
+    activeSegmentBlinkColor = segmentColor;
+  }
+}
+
+function shadePastTime(cx, cy) {
+  currentHour = hour();
+  currentMinute = minute();
+  if (currentHour > 9 ) {
+    shadeSegment(cx, cy, 330, 360);
+  }
+  if (currentHour > 11) {
+    shadeSegment(cx, cy, 300, 330);
+  }
+  if(currentHour > 11) {
+    shadeSegment(cx, cy, 270, 300);
+  }
+  if(currentHour > 13) {
+    shadeSegment(cx, cy, 240, 270);
+  }
+  if(currentHour > 15) {
+    shadeSegment(cx, cy, 210, 240);
+  }
+  if(currentHour > 17) {
+    shadeSegment(cx, cy, 180, 210);
+  }
+  if(currentHour > 19) {
+    shadeSegment(cx, cy, 150, 180);
+  }
+  if(currentHour > 21) {
+    shadeSegment(cx, cy, 120, 150);
+  }
+  if(currentHour > 23) {
+    shadeSegment(cx, cy, 90, 120);
+  }
+  if(currentHour === 0) {
+    shadeSegment(cx, cy, 90, 360);
+  }
+}
+
+function shadeSegment(cx, cy, startAngle, endAngle) {
+  push();
+  translate(cx, cy);
+  ellipseMode(RADIUS);
+  strokeWeight(.75);
+  for (angle = startAngle; angle < endAngle; angle += 1.25) {
+    line(0, 0, radius * cos(angle), radius * sin(angle));
+  }
+  pop();
+}
+
+
+function createDaySegments(startTime, sleepHours, segmentHours, segmentUnit) {
+  // TODO This is to make the segment creation dynamic, 
+  // and make also segments array width.
 }

@@ -1,6 +1,8 @@
 @font-face {
   font-family: "Neo Euler";
-  src: url("fonts/neo-euler.otf") format("otf");
+  src: url("fonts/neo-euler.otf") format("otf"),
+       url("fonts/neo-euler.ttf") format("ttf"),
+       url("fonts/neo-euler.woff") format("woff");
 }
 
 html { 
