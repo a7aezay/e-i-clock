@@ -13,10 +13,7 @@
 
 let radius;
 let eulerFont;
-let activeSegment;
-let activeSegmentBlinkCounter;
-let activeSegmentBlinkColor;
-let activeSegmentBlinkRate;
+
 
 function preload() {
   eulerFont = loadFont('../fonts/neo-euler.otf');
@@ -34,8 +31,6 @@ function setup() {
   let minScreenLength = Math.min(windowWidth, windowHeight);
   radius = minScreenLength / 2 * 0.618;
   console.log(radius);
-  activeSegmentBlinkColor = '#1D222A';
-  activeSegmentBlinkCounter = second();
 }
 
 function windowResized() {
@@ -53,7 +48,6 @@ function draw() {
   drawClockLabels(width / 2, height / 2);
   shadeDaySegments(width / 2, height / 2);
   shadeSleepSegment(width / 2, height / 2);
-  // shadeActiveSegment(width/2, height/2);
   shadePastTime(width / 2, height / 2);
 }
 
@@ -113,7 +107,6 @@ function drawClockLabels(cx, cy) {
 }
 
 function shadeDaySegments(cx, cy) {
-  console.log(activeSegment);
   push();
   ellipseMode(RADIUS);
   strokeWeight(4);
@@ -162,24 +155,6 @@ function between(x, min, max) {
   return x >= min && x <= max;
 }
 
-function blinkSegment(segmentColor) {
-  console.log(activeSegmentBlinkCounter);
-  let currentSecond = second();
-  if (activeSegmentBlinkCounter != currentSecond) {
-    toggleColor(segmentColor);
-    activeSegmentBlinkCounter = currentSecond;
-  }
-}
-
-function toggleColor(segmentColor) {
-  if (activeSegmentBlinkColor === segmentColor) {
-    fill('#1D222A');
-    activeSegmentBlinkColor = '#1D222A';
-  } else {
-    fill(segmentColor);
-    activeSegmentBlinkColor = segmentColor;
-  }
-}
 
 function shadePastTime(cx, cy) {
   currentHour = hour();
@@ -225,10 +200,4 @@ function shadeSegment(cx, cy, startAngle, endAngle) {
     line(0, 0, radius * cos(angle), radius * sin(angle));
   }
   pop();
-}
-
-
-function createDaySegments(startTime, sleepHours, segmentHours, segmentUnit) {
-  // TODO This is to make the segment creation dynamic, 
-  // and make also segments array width.
 }
