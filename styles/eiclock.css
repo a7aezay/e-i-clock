@@ -21,6 +21,11 @@ body {
   justify-content: center;
 }
 
+#about {
+  font-weight: bold;
+  font-size: 1.25em;
+}
+
 header {
   font-size: 2em;
   text-align: center;

@@ -12,8 +12,10 @@
  */
 
 let radius;
+let center = {x:0,y:0};
 let eulerFont;
-
+const GOLDEN_RATIO = 0.618;
+const STROKE_WEIGHT = 4;
 
 function preload() {
   eulerFont = loadFont('../fonts/neo-euler.otf');
@@ -23,32 +25,40 @@ function setup() {
   // create canvas
   let canvas = createCanvas(windowWidth, windowHeight);
   // assign the canvas to element
-  canvas.parent("eiclock-canvas");
+  canvas.parent("eiclock");
   // load the site font
   textFont(eulerFont);
   angleMode(DEGREES);
-  // caclulate the clock radius
-  let minScreenLength = Math.min(windowWidth, windowHeight);
-  radius = minScreenLength / 2 * 0.618;
-  console.log(radius);
+  calculateRadius();
+  calculateCenter();
 }
 
 function windowResized() {
-  // recaclualate the clock radius
-  let minScreenLength = Math.min(windowWidth, windowHeight);
-  radius = minScreenLength / 2 * 0.618;
-  console.log(radius);
+  calculateRadius();
+  calculateCenter();
   resizeCanvas(windowWidth, windowHeight);
+}
+
+function calculateRadius() {
+  let minScreenLength = Math.min(windowWidth, windowHeight);
+  radius = minScreenLength / 2 * GOLDEN_RATIO;
+  console.log(radius);
+}
+
+function calculateCenter() {
+  center.x = windowWidth / 2;
+  center.y = windowHeight / 2;
+  console.log(center);
 }
 
 function draw() {
   printMillis();
-  drawAxis(4);
-  drawClock(4);
-  drawClockLabels(width / 2, height / 2);
-  shadeDaySegments(width / 2, height / 2);
-  shadeSleepSegment(width / 2, height / 2);
-  shadePastTime(width / 2, height / 2);
+  drawAxis();
+  //drawClock();
+  //drawClockLabels();
+  //shadeDaySegments();
+  //shadeSleepSegment();
+  //shadePastTime();
 }
 
 function printMillis() {
@@ -59,29 +69,28 @@ function printMillis() {
   p.style('font-size', '11px');
   p.position(4, 4);
 }
-function drawAxis(strokeWeightValue) {
+function drawAxis() {
   push();
   // stroke
-  strokeWeight(strokeWeightValue);
+  strokeWeight(STROKE_WEIGHT);
   // draw x-axis
-  line(0, height / 2, width, height / 2);
+  line(0, center.x, width, center.y);
   // draw y-axis
-  line(width / 2, 0, width / 2, height);
+  line(center.x, 0, center.y, height);
   pop();
 }
 
-function drawClock(strokeWeightValue) {
-  let diameter = 2 * radius;
+function drawClock() {
   push();
-  strokeWeight(strokeWeightValue);
+  strokeWeight(STROKE_WEIGHT);
   noFill();
-  circle(width / 2, height / 2, diameter);
+  circle(center.x, center.y, 2 * radius);
   pop();
 }
 
-function drawClockLabels(cx, cy) {
+function drawClockLabels() {
   push();
-  translate(cx, cy);
+  translate(center.x, center.y);
   textSize(24);
   // 7am
   text("7am", radius * cos(0), radius * sin(0) - textDescent());
@@ -106,46 +115,46 @@ function drawClockLabels(cx, cy) {
   pop();
 }
 
-function shadeDaySegments(cx, cy) {
+function shadeDaySegments() {
   push();
   ellipseMode(RADIUS);
   strokeWeight(4);
   // [7,9]
   fill('#B9C2CF');
-  arc(cx, cy, radius, radius, 330, 360, PIE);
+  arc(center.x, center.y, radius, radius, 330, 360, PIE);
   // [9, 11]
   fill('#A4AFC0');
-  arc(cx, cy, radius, radius, 300, 330, PIE);
+  arc(center.x, center.y, radius, radius, 300, 330, PIE);
   // [11, 1]
   fill('#8F9DB1');
-  arc(cx, cy, radius, radius, 270, 300, PIE);
+  arc(center.x, center.y, radius, radius, 270, 300, PIE);
   // [1, 3]
   fill('#7A8BA3');
-  arc(cx, cy, radius, radius, 240, 270, PIE);
+  arc(center.x, center.y, radius, radius, 240, 270, PIE);
   // [3, 5]
   fill('#667893');
-  arc(cx, cy, radius, radius, 210, 240, PIE);
+  arc(center.x, center.y, radius, radius, 210, 240, PIE);
   // [5, 7]
   fill('#57677E');
-  arc(cx, cy, radius, radius, 180, 210, PIE);
+  arc(center.x, center.y, radius, radius, 180, 210, PIE);
   // [7, 9]
   fill('#485669');
-  arc(cx, cy, radius, radius, 150, 180, PIE);
+  arc(center.x, center.y, radius, radius, 150, 180, PIE);
   // [9,11]
   fill('#3A4554');
-  arc(cx, cy, radius, radius, 120, 150, PIE);
+  arc(center.x, center.y, radius, radius, 120, 150, PIE);
   // [11, 1]
   fill('#2B333F');
-  arc(cx, cy, radius, radius, 90, 120, PIE);
+  arc(center.x, center.y, radius, radius, 90, 120, PIE);
   pop();
 }
 
-function shadeSleepSegment(cx, cy) {
+function shadeSleepSegment() {
   push();
   fill('#1D222A');
   ellipseMode(RADIUS);
   strokeWeight(4);
-  arc(cx, cy, radius, radius, 0, 90, PIE);
+  arc(center.x, center.y, radius, radius, 0, 90, PIE);
   pop();
 }
 

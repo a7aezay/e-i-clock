@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <title>about</title>
+    <link rel="stylesheet" href="styles/eiclock.css">
+    <!-- the below three lines are a fix to get HTML5 semantic elements working in old versions of Internet Explorer-->
+    <!--[if lt IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+    <script src="scripts/p5.min.js"></script>
+    <!-- <script src="scripts/p5.sound.min.js"></script> -->
+</head>
+
+<body>
+    <!-- Here is our main header that is used across all the pages of our website -->
+
+    <header>
+        <h1>e<sup>i clock</sup></h1>
+    </header>
+
+    <!-- main content -->
+    <main>
+        <article id="about">
+            <p> eiclock.com is a one day clock. It maps the 24 hours of a day on a unit circle using euler's identity.
+            </p>
+            e^i2pi = 1 day
+
+            <p>This is an animation of a 1 full day.</p>
+
+            {{ Insert animation here }}
+
+            <p>The day can start at an time you want. The default is 7:00 am, like Elon [1].
+                The day is split into 4 quarters, each is 6 hours, with 1 quarter dedicated to sleep, like Elon. He has
+                around 6 hours sleep a day [2].</p>
+
+            <p>Each of the remaing 3 quarters is split in 3 sectors, every sector is 2 hours long. And
+                each sector is split in 24 blocks, each block is 5 minutes long, again like Elon.</p>
+
+            <p>Put all the above together, you get a 1 dat clock with a default configuration ( call it Elon
+                configuration) That
+                give you a visual view of your day. With the time passed the time remaining and also remaing blocks in
+                the current sector.</p>
+
+            {{ Insert the clock here}}
+        </article>
+    </main>
+
+
+    <!-- The sketching scripts goes here -->
+    <script src="scripts/eiclock.js"></script>
+    <!-- And here is our main footer that is used across all the pages of our website -->
+    <footer>
+        <p>©Copyright 2022 by a7aezay.com . All rights reversed.</p>
+    </footer>
+
+</body>
+
+</html>
